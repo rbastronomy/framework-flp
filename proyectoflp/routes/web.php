@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\menu;
+use App\Http\Controllers\PostController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +14,12 @@ use App\Http\Controllers\menu;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//rutas publicas
+Route::get('/', function () {
+    return view('welcome');
+});
+
+//rutas privadas
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -23,14 +30,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+
+
+
+
+
+
 require __DIR__.'/auth.php';
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/menu', [menu::class,'index']);
-
-Route::get('/menu/buscar', [menu::class,'buscar']);
-
-Route::get('/menu/usuarios/{nombre_usuario?}', [menu::class, 'usuarios']);
